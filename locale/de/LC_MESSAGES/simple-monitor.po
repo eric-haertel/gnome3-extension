@@ -1,2 +1,0 @@
-msgid "hello-world"
-msgstr "Hallo Welt!"

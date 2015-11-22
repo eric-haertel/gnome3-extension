@@ -71,13 +71,15 @@ function _showSnowFlake() {
 }
 
 function _moveFlake(y) {
-  log("SimpleMonitor: _moveFlake");
   let monitor = Main.layoutManager.primaryMonitor;
+  log("SimpleMonitor: _moveFlake Monitor heigt="+monitor.height+" width="+monitor.width);
   if( y >= monitor.height){
-    _hideSnowFlake();
-    isActive = false;
+    log("SimpleMonitor: _moveFlake: down y=" + y);
+    return y - 0.01;
+  } else {
+    log("SimpleMonitor: _moveFlake: up y=" + y);
+    return y + 0.01;
   }
-  return y + 0.01;
 }
 
 function init(extensionMeta) {
@@ -85,19 +87,7 @@ function init(extensionMeta) {
   log("SimpleMonitor: path: " + metadata.path);
 
   Translation.initTranslation();
-
-  button = new St.Bin({ style_class: 'panel-button',
-                        reactive: true,
-                        can_focus: true,
-                        x_fill: true,
-                        y_fill: false,
-                        track_hover: true });
-  let icon = new St.Icon({ icon_name: 'system-run-symbolic',
-                           style_class: 'system-status-icon' });
-
-  button.set_child(icon);
-  //button.connect('button-press-event', _toggleSnowFlake);
-  button.connect('button-press-event', _showHello);
+  initStatusBarButton();
 }
 
 function enable() {
@@ -107,4 +97,20 @@ function enable() {
 
 function disable() {
   Main.panel._rightBox.remove_child(button);
+}
+
+function initStatusBarButton() {
+    button = new St.Bin({ style_class: 'panel-button',
+                        reactive: true,
+                        can_focus: true,
+                        x_fill: true,
+                        y_fill: false,
+                        track_hover: true });
+  let icon = new St.Icon({ icon_name: 'system-run-symbolic',
+                           style_class: 'system-status-icon' });
+
+  button.set_child(icon);
+  button.connect('button-press-event', _toggleSnowFlake);
+//  button.connect('button-press-event', _showHello);
+
 }

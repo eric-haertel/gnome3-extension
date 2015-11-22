@@ -1,16 +1,17 @@
+const Me = imports.misc.extensionUtils.getCurrentExtension();
 const ExtensionUtils = imports.misc.extensionUtils;
 const Gettext = imports.gettext;
+const Domain = Me.metadata['gettext-domain'];
 
 
 function initTranslation(domain){
-	log("SimpleMonitor: initTranslation");
-	let extension = ExtensionUtils.getCurrentExtension();
-	let localeDir = extension.dir.get_child('locale');
+	log("SimpleExtension: initTranslation: Domain="+Domain);
+	let localeDir = Me.dir.get_child('locale');
 
-	Gettext.bindtextdomain("simple-monitor", localeDir.get_path());
-	Gettext.textdomain("simple-monitor");
+	Gettext.bindtextdomain(Domain, localeDir.get_path());
+	Gettext.textdomain(Domain);
 }
 
 function getText(key){
-	return Gettext.domain(Me.metadata['gettext-domain']).gettext(key);
+	return Gettext.domain(Domain).gettext(key);
 }
