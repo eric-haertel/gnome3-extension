@@ -1,0 +1,7 @@
+{	
+	"description": "Playground to see what the extension can do.", 
+	"name": "simple-extension", 
+	"uuid": "simple-extension@eric.haertel", 
+	"shell-version": ["3.16.4"],
+	"gettext-domain": "simple-extension"
+}
