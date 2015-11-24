@@ -13,11 +13,6 @@ Installaiton
   + The name of extention directory must be equal to the extension UUID
 1. 
 
-Links
------
-+ https://extensions.gnome.org/
-+ https://wiki.gnome.org/Projects/GnomeShell/Extensions#Writing_an_extension
-
 Milestones
 ----------
 1. Template for extensions
@@ -30,3 +25,8 @@ Development
 ### Debugging
 1. See log messages: terminal -> journalctl /usr/bin/gnome-session -f -o cat
 1. LookingGlass: Alt+F2 -> lg
+
+###Links
++ https://extensions.gnome.org/
++ https://wiki.gnome.org/Projects/GnomeShell/Extensions#Writing_an_extension
++ https://developer.gnome.org/gnome-devel-demos/stable/beginner.js.html.en

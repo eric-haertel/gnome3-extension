@@ -1,4 +1,3 @@
-
 const St = imports.gi.St;
 const Main = imports.ui.main;
 const Tweener = imports.ui.tweener;
@@ -16,26 +15,6 @@ const Translation = Me.imports.translation;
 function _hideHello() {
   Main.uiGroup.remove_actor(text);
   text = null;
-}
-
-function _showHello() {
-  if (!text) {
-      text = new St.Label({ style_class: 'helloworld-label', text: Translation.getText('hello-world') });
-      Main.uiGroup.add_actor(text);
-  }
-
-  text.opacity = 255;
-
-  let monitor = Main.layoutManager.primaryMonitor;
-
-  text.set_position(monitor.x + Math.floor(monitor.width / 2 - text.width / 2),
-                    monitor.y + Math.floor(monitor.height / 2 - text.height / 2));
-
-  Tweener.addTween(text,
-                   { opacity: 0,
-                     time: 4,
-                     transition: 'easeOutQuad',
-                     onComplete: _hideHello });
 }
 
 function _toggleSnowFlake(){
@@ -60,26 +39,28 @@ function _showSnowFlake() {
   flake = new St.Label({ style_class: 'helloworld-label', text: '*' });
   Main.uiGroup.add_actor(flake);
   let monitor = Main.layoutManager.primaryMonitor;
-
   flake.set_position(monitor.x + Math.floor(monitor.width / 2 ), 0);
-
-   Tweener.addTween(flake,
-                   { y: monitor.height,
-                      time: 40,
-                     transition: _moveFlake });
-
+  flakeDownwards();
 }
 
-function _moveFlake(y) {
+function flakeDownwards(){
   let monitor = Main.layoutManager.primaryMonitor;
-  log("SimpleMonitor: _moveFlake Monitor heigt="+monitor.height+" width="+monitor.width);
-  if( y >= monitor.height){
-    log("SimpleMonitor: _moveFlake: down y=" + y);
-    return y - 0.01;
-  } else {
-    log("SimpleMonitor: _moveFlake: up y=" + y);
-    return y + 0.01;
-  }
+  Tweener.addTween(flake,
+                   { y: monitor.height,
+                     x: monitor.width/2,
+                     time: 5,
+                     transition: "linear",
+                     onComplete: flakeUpwards });
+}
+
+function flakeUpwards(){
+  let monitor = Main.layoutManager.primaryMonitor;
+  Tweener.addTween(flake,
+                   { y: 0,
+                     x: monitor.width/2,
+                     time: 5,
+                     transition: "linear",
+                     onComplete: flakeDownwards });
 }
 
 function init(extensionMeta) {
@@ -111,6 +92,4 @@ function initStatusBarButton() {
 
   button.set_child(icon);
   button.connect('button-press-event', _toggleSnowFlake);
-//  button.connect('button-press-event', _showHello);
-
 }
